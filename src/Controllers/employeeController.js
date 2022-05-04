@@ -1,5 +1,6 @@
 import employeeModel from '../models/employeeModel.js';
 import jwt from 'jsonwebtoken';
+import 'dotenv/config';
 
 //#region registerEmployee
 export const registerEmployee = async (req, res) => {
@@ -28,7 +29,7 @@ export const employeeLogin = async (req, res) => {
         } else {
             const token = jwt.sign({
                 email: employee.email, _id: employee._id
-            }, 'SecretKey', {
+            }, process.env.SECRET_KEY, {
                 expiresIn: '1h'
             });
             return res.status(200).send({ message: 'Login successful', token: token });

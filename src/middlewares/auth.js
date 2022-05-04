@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken'
-const secretKey = "SecretKey"
+import 'dotenv/config'
 export const employeeAuth = async (req, res, next) => {
     try {
         const token = req.header('Authorization', 'Bearer Token')
@@ -18,7 +18,7 @@ export const employeeAuth = async (req, res, next) => {
         if (Date.now() > (timeOut.exp) * 1000) {
             return res.status(404).send({ status: false, message: `Session Expired, please login again` })
         }
-        const verify = jwt.verify(T[1], secretKey)
+        const verify = jwt.verify(T[1], process.env.SECRET_KEY)
         
         if (!verify) {
             return res.status(403).send({ status: false, message: `Invalid authentication token in request ` })
